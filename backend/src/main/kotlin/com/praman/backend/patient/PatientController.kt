@@ -18,7 +18,7 @@ class PatientController(val service: PatientService) {
         try {
             return ResponseEntity.ok().body(service.get(id))
         } catch (ex: ResourceNotFoundException) {
-            return ResponseEntity.notFound().build()
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with ID: $id not found")
         }
     }
 
