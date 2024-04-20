@@ -10,9 +10,8 @@ class PatientService(val repository: PatientRepository) {
     }
 
     fun get(id: Long): Patient {
-        val patient = repository.findById(id);
-        if (patient.isPresent) {
-            return patient.get()
+        if (repository.existsById(id)) {
+            return repository.findById(id).get();
         } else {
             throw ResourceNotFoundException("Patient with ID: $id not found.")
         }
@@ -20,5 +19,21 @@ class PatientService(val repository: PatientRepository) {
 
     fun create(request: PatientCreateRequest): Patient {
         return repository.save(request.toEntity())
+    }
+
+    fun update(id: Long, request: PatientUpdateRequest): Patient {
+        if (repository.existsById(id)) {
+            return repository.save(request.toEntity(id))
+        } else {
+            throw ResourceNotFoundException("Patient with ID: $id not found.")
+        }
+    }
+
+    fun delete(id: Long) {
+        if (repository.existsById(id)) {
+            return repository.deleteById(id)
+        } else {
+            throw ResourceNotFoundException("Patient with ID: $id not found.")
+        }
     }
 }
