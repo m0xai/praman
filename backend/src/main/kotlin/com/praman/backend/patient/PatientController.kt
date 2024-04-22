@@ -1,6 +1,6 @@
 package com.praman.backend.patient
 
-import org.springframework.data.rest.webmvc.ResourceNotFoundException
+import com.praman.backend.patient.exceptions.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -8,15 +8,14 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("patients")
-@CrossOrigin(origins = ["http://localhost:4200"])
 class PatientController(val service: PatientService) {
-    @GetMapping("/")
-    fun list(): ResponseEntity<List<Patient>> {
+    @GetMapping
+    fun list(): ResponseEntity<List<PatientResponse>> {
         return ResponseEntity.ok().body(service.list())
     }
 
-    @GetMapping("/{id}/")
-    fun get(@PathVariable id: Long): ResponseEntity<Patient> {
+    @GetMapping("/{id}")
+    fun get(@PathVariable id: Long): ResponseEntity<PatientResponse> {
         try {
             return ResponseEntity.ok().body(service.get(id))
         } catch (ex: ResourceNotFoundException) {
@@ -24,13 +23,13 @@ class PatientController(val service: PatientService) {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping
     fun create(@RequestBody request: PatientCreateRequest): ResponseEntity<PatientResponse> {
         val patient = service.create(request)
         return ResponseEntity.ok().body(patient.toResponse())
     }
 
-    @PutMapping("/{id}/")
+    @PutMapping("/{id}")
     fun put(@RequestBody request: PatientUpdateRequest, @PathVariable id: Long):
             ResponseEntity<PatientResponse> {
         try {
