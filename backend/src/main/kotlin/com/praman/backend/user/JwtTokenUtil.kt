@@ -3,13 +3,14 @@ package com.praman.backend.user
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class JwtTokenUtil {
 
-    private val secret = "YOUR_SECRET"
+    private val secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     private val expiration = 6000000
 
     fun generateToken(username: String): String =
