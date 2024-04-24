@@ -1,4 +1,5 @@
 import {
+  DateField,
   DeleteButton,
   EditButton,
   List,
@@ -6,9 +7,11 @@ import {
   useTable,
 } from "@refinedev/antd";
 import { BaseRecord } from "@refinedev/core";
-import { Space, Table } from "antd";
+import { Space, Table, Typography } from "antd";
 
 export const CategoryList = () => {
+  const { Text } = Typography;
+
   const { tableProps } = useTable({
     syncWithLocation: true,
   });
@@ -17,7 +20,12 @@ export const CategoryList = () => {
     <List>
       <Table {...tableProps} rowKey="id">
         <Table.Column dataIndex="id" title={"ID"} />
-        <Table.Column dataIndex="title" title={"title"} />
+        <Table.Column dataIndex="fullName" title={"Full Name"} />
+        <Table.Column
+          dataIndex="dateOfBirth"
+          render={(v) => <DateField value={v} format="DD/MM/YYYY" />}
+          title={"Date of Birth"}
+        />
         <Table.Column
           title={"Actions"}
           dataIndex="actions"
