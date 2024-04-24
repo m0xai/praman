@@ -1,17 +1,29 @@
 import { AuthBindings } from "@refinedev/core";
+import axios from "axios";
 
 export const TOKEN_KEY = "refine-auth";
 
 export const authProvider: AuthBindings = {
-  login: async ({ username, email, password }) => {
-    if ((username || email) && password) {
-      localStorage.setItem(TOKEN_KEY, username);
-      return {
-        success: true,
-        redirectTo: "/",
-      };
+  login: async ({ email, password }) => {
+    if (email && password) {
+      const auth = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        body: JSON.stringify({ email, password }),
+      });
+      if (auth.status === 200) {
+        const token = auth.headers.get("authorization");
+        localStorage.setItem(TOKEN_KEY, token!);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        return {
+          success: true,
+          redirectTo: "/",
+        };
+      }
     }
-
     return {
       success: false,
       error: {
@@ -20,6 +32,7 @@ export const authProvider: AuthBindings = {
       },
     };
   },
+
   logout: async () => {
     localStorage.removeItem(TOKEN_KEY);
     return {
@@ -27,6 +40,7 @@ export const authProvider: AuthBindings = {
       redirectTo: "/login",
     };
   },
+
   check: async () => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
@@ -40,7 +54,9 @@ export const authProvider: AuthBindings = {
       redirectTo: "/login",
     };
   },
+
   getPermissions: async () => null,
+
   getIdentity: async () => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
@@ -52,6 +68,7 @@ export const authProvider: AuthBindings = {
     }
     return null;
   },
+
   onError: async (error) => {
     console.error(error);
     return { error };
