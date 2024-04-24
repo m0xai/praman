@@ -1,15 +1,23 @@
 package com.praman.backend.patient
 
 import com.praman.backend.base.BaseEntity
+import com.praman.backend.patient.enums.BloodGroup
 import jakarta.persistence.Entity
 import java.util.*
 
 @Entity(name = "patients")
 data class Patient(
     val fullName: String,
-    val dateOfBirth: Date
+    val dateOfBirth: Date,
+    val phoneNumber: String,
+    val bloodGroup: BloodGroup,
 ) : BaseEntity() {
-    constructor(id: Long, fullName: String, dateOfBirth: Date) : this(fullName, dateOfBirth) {
+    constructor(id: Long, fullName: String, dateOfBirth: Date, phoneNumber: String, bloodGroup: BloodGroup) : this(
+        fullName,
+        dateOfBirth,
+        phoneNumber,
+        bloodGroup
+    ) {
         this.id = id
     }
 }
