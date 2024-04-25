@@ -8,6 +8,7 @@ import {
 } from "@refinedev/antd";
 import { BaseRecord } from "@refinedev/core";
 import { Space, Table, Typography } from "antd";
+import { BloodGroup } from "../../schemas/BloodGroup";
 
 export const CategoryList = () => {
   const { Text } = Typography;
@@ -26,7 +27,17 @@ export const CategoryList = () => {
           render={(v) => <DateField value={v} format="DD/MM/YYYY" />}
           title={"Date of Birth"}
         />
+        <Table.Column dataIndex="phoneNumber" title={"Phone Number"} />
         <Table.Column
+          align={"center"}
+          dataIndex="bloodGroup"
+          title={"Blood Group"}
+          render={(value: any) => {
+            return BloodGroup[value];
+          }}
+        />
+        <Table.Column
+          align={"center"}
           title={"Actions"}
           dataIndex="actions"
           render={(_, record: BaseRecord) => (
