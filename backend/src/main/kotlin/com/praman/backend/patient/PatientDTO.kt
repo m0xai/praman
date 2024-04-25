@@ -37,6 +37,8 @@ data class PatientResponse(
     val id: Long,
     val fullName: String,
     val dateOfBirth: Date,
+    val phoneNumber: String,
+    val bloodGroup: BloodGroup,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
 )
@@ -45,6 +47,8 @@ fun Patient.toResponse() = PatientResponse(
     id = id,
     fullName = fullName,
     dateOfBirth = dateOfBirth,
+    phoneNumber = phoneNumber,
+    bloodGroup = bloodGroup,
     createdAt = createdAt,
     updatedAt = updatedAt
 )
