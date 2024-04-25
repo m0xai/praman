@@ -1,19 +1,10 @@
 import { Edit, useForm } from "@refinedev/antd";
 import { DatePicker, Form, Input, Select } from "antd";
 import dayjs from "dayjs";
-import { BloodGroup } from "../../schemas/BloodGroup";
+import { bloodGrpupOptions } from "../../utils/bloodGroupOptions";
 
 export const CategoryEdit = () => {
   const { formProps, saveButtonProps } = useForm({});
-
-  const bloodGrpupKeys = Object.keys(BloodGroup).filter(
-    (key: string | number) => (isNaN(Number(key)) ? true : false)
-  );
-
-  const bloodGrpupOptions = bloodGrpupKeys.map((key: string) => ({
-    label: BloodGroup[key],
-    value: key,
-  }));
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
