@@ -10,7 +10,7 @@ import { Typography } from "antd";
 
 const { Title } = Typography;
 
-export const BlogPostShow = () => {
+export const DoctorShow = () => {
   const { queryResult } = useShow({});
   const { data, isLoading } = queryResult;
 
