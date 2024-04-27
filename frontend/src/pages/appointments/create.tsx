@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 
 export const AppointmentCreate = () => {
   const { formProps, saveButtonProps } = useForm();
+
   const { options: doctorOptions } = useSelect({
     resource: "doctors",
     optionLabel: "fullName",
@@ -52,7 +53,9 @@ export const AppointmentCreate = () => {
           label={"Status"}
           hidden
           initialValue={"PENDING"}
-        />
+        >
+          <Input />
+        </Form.Item>
       </Form>
     </Create>
   );
