@@ -4,7 +4,7 @@ import { DatePicker, Form, Input, Select, TimePicker } from "antd";
 import dayjs from "dayjs";
 
 export const AppointmentCreate = () => {
-  const { formProps, saveButtonProps } = useForm({});
+  const { formProps, saveButtonProps } = useForm();
   const { options: doctorOptions } = useSelect({
     resource: "doctors",
     optionLabel: "fullName",
