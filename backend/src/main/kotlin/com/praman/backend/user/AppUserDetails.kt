@@ -3,9 +3,9 @@ package com.praman.backend.user
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class UserSecurity
+class AppUserDetails
     (
-    val id: String,
+    val id: Long,
     val email: String,
     private val uPassword: String,
     private val uAuthorities: MutableCollection<GrantedAuthority>
