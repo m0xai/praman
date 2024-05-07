@@ -7,12 +7,17 @@ import java.util.*
 
 @Entity(name = "patients")
 data class Patient(
+    val email: String,
     val fullName: String,
     val dateOfBirth: Date,
     val phoneNumber: String,
     val bloodGroup: BloodGroup,
 ) : BaseEntity() {
-    constructor(id: Long, fullName: String, dateOfBirth: Date, phoneNumber: String, bloodGroup: BloodGroup) : this(
+    constructor(
+        id: Long, email: String, fullName: String, dateOfBirth: Date, phoneNumber: String, bloodGroup:
+        BloodGroup
+    ) : this(
+        email,
         fullName,
         dateOfBirth,
         phoneNumber,

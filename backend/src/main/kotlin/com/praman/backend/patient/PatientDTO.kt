@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class PatientCreateRequest(
+    val email: String,
     val fullName: String,
     val dateOfBirth: Date,
     val phoneNumber: String,
@@ -12,6 +13,7 @@ data class PatientCreateRequest(
 )
 
 fun PatientCreateRequest.toEntity() = Patient(
+    email = email,
     fullName = fullName,
     dateOfBirth = dateOfBirth,
     phoneNumber = phoneNumber,
@@ -19,6 +21,7 @@ fun PatientCreateRequest.toEntity() = Patient(
 )
 
 data class PatientUpdateRequest(
+    val email: String,
     val fullName: String,
     val dateOfBirth: Date,
     val phoneNumber: String,
@@ -27,6 +30,7 @@ data class PatientUpdateRequest(
 
 fun PatientUpdateRequest.toEntity(id: Long) = Patient(
     id = id,
+    email = email,
     fullName = fullName,
     dateOfBirth = dateOfBirth,
     phoneNumber = phoneNumber,
@@ -35,6 +39,7 @@ fun PatientUpdateRequest.toEntity(id: Long) = Patient(
 
 data class PatientResponse(
     val id: Long,
+    val email: String,
     val fullName: String,
     val dateOfBirth: Date,
     val phoneNumber: String,
@@ -45,6 +50,7 @@ data class PatientResponse(
 
 fun Patient.toResponse() = PatientResponse(
     id = id,
+    email = email,
     fullName = fullName,
     dateOfBirth = dateOfBirth,
     phoneNumber = phoneNumber,
