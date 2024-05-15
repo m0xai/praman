@@ -2,12 +2,14 @@ package com.praman.backend.doctor
 
 
 data class DoctorCreateRequest(
+    val email: String,
     val fullName: String,
     val profession: String,
     val description: String,
 )
 
 fun DoctorCreateRequest.toEntity() = Doctor(
+    email = email,
     fullName = fullName,
     profession = profession,
     description = description
@@ -15,6 +17,7 @@ fun DoctorCreateRequest.toEntity() = Doctor(
 
 
 data class DoctorUpdateRequest(
+    val email: String,
     val fullName: String,
     val profession: String,
     val description: String,
@@ -22,6 +25,7 @@ data class DoctorUpdateRequest(
 
 fun DoctorUpdateRequest.toEntity(id: Long) = Doctor(
     id = id,
+    email = email,
     fullName = fullName,
     profession = profession,
     description = description,
@@ -29,6 +33,7 @@ fun DoctorUpdateRequest.toEntity(id: Long) = Doctor(
 
 data class DoctorResponse(
     val id: Long,
+    val email: String,
     val fullName: String,
     val profession: String,
     val description: String,
@@ -36,6 +41,7 @@ data class DoctorResponse(
 
 fun Doctor.toResponse() = DoctorResponse(
     id = id,
+    email = email,
     fullName = fullName,
     profession = profession,
     description = description
