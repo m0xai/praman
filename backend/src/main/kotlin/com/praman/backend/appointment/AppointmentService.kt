@@ -3,6 +3,8 @@ package com.praman.backend.appointment
 import com.praman.backend.doctor.DoctorService
 import com.praman.backend.patient.PatientService
 import com.praman.backend.patient.exceptions.ResourceNotFoundException
+import com.praman.backend.user.UserUtil
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,12 +13,24 @@ class AppointmentService(
     val patientService: PatientService,
     val doctorService: DoctorService
 ) {
+    private final val logger = LoggerFactory.getLogger(AppointmentService::class.java)
 
     fun list(): List<AppointmentResponse> {
-        val appointmentList = repository.findAll().map { ap ->
+        val isPatient = UserUtil.hasRole("PATIENT");
+        val isDoctor = UserUtil.hasRole("DOCTOR");
+
+        val userEmail = UserUtil.email();
+
+        val appointmentList = if (isPatient) {
+            repository.findAllByPatientEmail(userEmail);
+        } else if (isDoctor) {
+            repository.findAllByDoctorEmail(userEmail)
+        } else {
+            repository.findAll()
+        }
+        return appointmentList.map { ap ->
             ap.toResponse(ap.patient, ap.doctor)
         }
-        return appointmentList;
     }
 
     fun get(id: Long): AppointmentResponse {
