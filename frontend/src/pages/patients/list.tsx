@@ -32,8 +32,8 @@ export const CategoryList = () => {
           align={"center"}
           dataIndex="bloodGroup"
           title={"Blood Group"}
-          render={(value: any) => {
-            return BloodGroup[value];
+          render={(value: string) => {
+            return <Text>{BloodGroup[value]}</Text>;
           }}
         />
         <Table.Column
