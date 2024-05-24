@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
-@RequestMapping("patients")
+@RequestMapping("api/patients")
 class PatientController(val service: PatientService) {
     @GetMapping
     fun list(): ResponseEntity<List<PatientResponse>> {
@@ -40,7 +40,18 @@ class PatientController(val service: PatientService) {
         }
     }
 
-    @DeleteMapping("/{id}/")
+    @PatchMapping("/{id}")
+    fun patch(@RequestBody request: PatientUpdateRequest, @PathVariable id: Long):
+            ResponseEntity<PatientResponse> {
+        try {
+            val patient = service.update(id, request)
+            return ResponseEntity.ok().body(patient.toResponse())
+        } catch (ex: ResourceNotFoundException) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
+        }
+    }
+
+    @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<String> {
         try {
             service.delete(id)
