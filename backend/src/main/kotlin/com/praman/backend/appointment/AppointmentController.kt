@@ -2,14 +2,12 @@ package com.praman.backend.appointment
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("api/appointments")
 class AppointmentController(val service: AppointmentService) {
-    @PreAuthorize("hasRole('DOCTOR')")
     @GetMapping
     fun list(): ResponseEntity<List<AppointmentResponse>> {
         try {
@@ -49,7 +47,6 @@ class AppointmentController(val service: AppointmentService) {
         }
     }
 
-
     @DeleteMapping("{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<String> {
         try {
@@ -59,5 +56,4 @@ class AppointmentController(val service: AppointmentService) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }
     }
-
 }
