@@ -24,6 +24,13 @@ class DoctorService(val repository: DoctorRepository) {
         throw ResourceNotFoundException("Doctor with $id not found")
     }
 
+    fun getByEmail(email: String): DoctorResponse {
+        if (!repository.existsByEmail(email)) {
+            throw ResourceNotFoundException("Doctor with $email not found");
+        }
+        return repository.getByEmail(email).toResponse()
+    }
+
     fun create(doctor: DoctorCreateRequest): DoctorResponse {
         val entity = repository.save(doctor.toEntity());
         return entity.toResponse();

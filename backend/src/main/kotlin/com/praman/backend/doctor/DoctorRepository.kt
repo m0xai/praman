@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface DoctorRepository : JpaRepository<Doctor, Long> {
+    fun existsByEmail(email: String): Boolean
+    fun getByEmail(email: String): Doctor
 }
