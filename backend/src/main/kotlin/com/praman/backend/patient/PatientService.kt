@@ -24,6 +24,13 @@ class PatientService(val repository: PatientRepository) {
         }
     }
 
+    fun getByEmail(email: String): PatientResponse {
+        if (!repository.existsByEmail(email)) {
+            throw ResourceNotFoundException("Patient with Email: $email not found.")
+        }
+        return repository.findByEmail(email).toResponse()
+    }
+
     fun create(request: PatientCreateRequest): Patient {
         return repository.save(request.toEntity())
     }
